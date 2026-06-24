@@ -1,6 +1,14 @@
-# RetailPulse
+# RetailPulse – AI-Powered Customer Analytics & Demand Forecasting Platform
 
-RetailPulse is an AI-powered customer analytics and demand forecasting platform for retail teams. It combines sales analytics, 30-day demand forecasting, customer segmentation, churn prediction, inventory optimization, drift monitoring, and exportable reports in a Streamlit web application with a FastAPI service layer.
+## Project Overview
+
+RetailPulse is an end-to-end AI-powered analytics platform designed for retail businesses to make data-driven decisions using Machine Learning and Predictive Analytics.
+
+The platform analyzes historical sales data, customer purchase behavior, and inventory records to provide actionable business insights such as demand forecasting, customer segmentation, churn prediction, and inventory optimization.
+
+The primary goal of this project is to help retailers reduce stockouts, improve customer retention, optimize inventory levels, and increase overall profitability through intelligent forecasting and analytics.
+
+---
 
 ## Architecture Diagram
 
@@ -79,111 +87,257 @@ RetailPulse/
 └── .github/workflows/
 ```
 
-## Installation
+## Problem Statement
 
-```bash
-cd RetailPulse
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-python -m src.utils.sample_data
-```
+Retail businesses often face challenges such as:
 
-For a lighter local development environment, install the common runtime first:
+* Running out of stock during high demand periods
+* Overstocking products leading to unnecessary storage costs
+* Difficulty identifying valuable customers
+* Losing customers without knowing the reasons
+* Making business decisions based on intuition instead of data
 
-```bash
-pip install pandas numpy scikit-learn scipy plotly streamlit fastapi uvicorn python-dotenv reportlab pytest prometheus-client sqlalchemy
-```
+RetailPulse addresses these challenges by transforming raw retail data into actionable insights through machine learning models and interactive dashboards.
 
-The code uses graceful fallbacks when optional heavyweight packages are unavailable.
+---
 
-## Usage
+## Solution Architecture
 
-Run the Streamlit app:
+The platform follows a complete Data Science lifecycle:
 
-```bash
-streamlit run app.py
-```
+### Data Collection
 
-Run the API:
+The system ingests data from multiple sources:
 
-```bash
-uvicorn src.api.main:app --reload
-```
+* Sales transactions
+* Customer information
+* Inventory records
 
-Open API documentation at:
+### Data Processing
 
-- Swagger UI: `http://localhost:8000/docs`
-- Health check: `http://localhost:8000/health`
+The raw data is cleaned, validated, and transformed using automated ETL pipelines.
 
-Demo API users:
+Data preparation includes:
 
-- `admin` / `admin123`
-- `analyst` / `analyst123`
+* Missing value handling
+* Duplicate removal
+* Outlier detection
+* Feature engineering
+* RFM score generation
 
-## API Documentation
+### Machine Learning Layer
 
-Authenticated endpoints use a bearer token from `/token`.
+The platform contains multiple machine learning modules:
 
-```bash
-curl -X POST http://localhost:8000/token \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=analyst&password=analyst123"
-```
+#### Demand Forecasting
 
-Endpoints:
+A hybrid forecasting engine was developed using Prophet and LSTM models.
 
-- `POST /forecast` with `{"product_id": "P001", "periods": 30}`
-- `GET /churn`
-- `GET /segments`
-- `GET /inventory`
-- `GET /health`
-- `POST /upload/{dataset_name}`
+The system predicts product demand for the next 30 days, helping businesses prepare inventory in advance.
 
-## Docker Deployment
+#### Customer Segmentation
 
-```bash
-docker compose up --build
-```
+Customers are grouped into meaningful segments using clustering algorithms such as K-Means and DBSCAN.
 
-Services launched:
+Example segments:
 
-- Streamlit: `http://localhost:8501`
-- FastAPI: `http://localhost:8000`
-- PostgreSQL: `localhost:5432`
-- Redis: `localhost:6379`
-- MLflow: `http://localhost:5000`
-- Prometheus: `http://localhost:9090`
-- Grafana: `http://localhost:3000`
+* VIP Customers
+* Loyal Customers
+* Regular Customers
+* New Customers
+* At-Risk Customers
+* Lost Customers
 
-## Kubernetes Deployment
+These segments allow businesses to create personalized marketing strategies.
 
-```bash
-kubectl apply -f k8s/configmap.yaml
-kubectl apply -f k8s/secrets.yaml
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-kubectl apply -f k8s/ingress.yaml
-kubectl apply -f k8s/autoscaling.yaml
-```
+#### Churn Prediction
 
-Replace `k8s/secrets.yaml` values with your cluster secret manager before production use.
+A supervised machine learning model was built using XGBoost to identify customers who are likely to stop purchasing.
 
-## MLOps
+The model generates a churn risk score for each customer, enabling businesses to take proactive retention actions.
 
-- `airflow/dags/retailpulse_pipeline.py` orchestrates ingestion, feature engineering, model training, evaluation, registration, deployment, and drift monitoring.
-- `src/utils/mlflow_utils.py` tracks parameters, metrics, and model artifacts.
-- `src/drift/drift_detector.py` creates Evidently reports when Evidently is installed and falls back to statistical KS drift reports.
-- `src/monitoring/metrics.py` exposes Prometheus counters, histograms, and gauges.
+#### Inventory Optimization
 
-## Testing
+Demand forecasts are combined with inventory data to generate intelligent reorder recommendations.
 
-```bash
-pytest -q
-ruff check .
-python scripts/train_smoke.py
-```
+The system calculates:
+
+* Reorder Point
+* Safety Stock
+* Economic Order Quantity
+
+This helps retailers maintain optimal stock levels while reducing both understock and overstock situations.
+
+---
+
+## Dashboard and User Interface
+
+A fully interactive web application was developed using Streamlit.
+
+The dashboard contains multiple modules:
+
+### Executive Dashboard
+
+Displays key business metrics:
+
+* Revenue
+* Orders
+* Customer Count
+* Inventory Status
+
+### Sales Analytics
+
+Provides detailed sales trends and performance analysis.
+
+### Demand Forecasting Dashboard
+
+Visualizes future demand predictions and seasonal patterns.
+
+### Customer Analytics Dashboard
+
+Displays customer segments and purchasing behavior insights.
+
+### Churn Prediction Dashboard
+
+Highlights high-risk customers and churn probabilities.
+
+### Inventory Optimization Dashboard
+
+Provides stock alerts and reorder recommendations.
+
+### Reporting Module
+
+Allows exporting reports in CSV and PDF formats.
+
+---
+
+## MLOps and Production Features
+
+To ensure scalability and production readiness, modern MLOps practices were implemented.
+
+### MLflow
+
+Used for:
+
+* Experiment tracking
+* Model versioning
+* Performance monitoring
+
+### Evidently AI
+
+Used for:
+
+* Data drift detection
+* Feature drift monitoring
+* Model health tracking
+
+### Airflow
+
+Used to automate:
+
+* Data ingestion
+* Feature engineering
+* Model retraining
+* Performance evaluation
+
+---
+
+## Deployment and Infrastructure
+
+The application was containerized using Docker and configured for deployment using Kubernetes.
+
+Deployment components include:
+
+* Streamlit Frontend
+* FastAPI Backend
+* PostgreSQL Database
+* Redis Cache
+* MLflow Tracking Server
+
+CI/CD pipelines were implemented using GitHub Actions to automate testing and deployment.
+
+---
+
+## Technologies Used
+
+Programming Language:
+
+* Python
+
+Machine Learning:
+
+* Scikit-Learn
+* XGBoost
+* Prophet
+* PyTorch
+* SHAP
+
+Data Processing:
+
+* Pandas
+* NumPy
+
+Visualization:
+
+* Plotly
+* Matplotlib
+* Streamlit
+
+Database:
+
+* PostgreSQL
+* Redis
+
+MLOps:
+
+* MLflow
+* Airflow
+* Evidently AI
+
+Deployment:
+
+* Docker
+* Kubernetes
+* GitHub Actions
+
+---
+
+## Business Impact
+
+The platform enables retail businesses to:
+
+* Forecast future demand accurately
+* Reduce stockouts and excess inventory
+* Identify high-value customers
+* Predict customer churn before it happens
+* Improve retention strategies
+* Make data-driven inventory decisions
+
+Expected outcomes include:
+
+* Reduced stock shortages
+* Better inventory utilization
+* Increased customer retention
+* Improved operational efficiency
+* Higher revenue generation
+
+---
+
+## Key Learnings
+
+Through this project, I gained hands-on experience in:
+
+* Data Engineering
+* Feature Engineering
+* Machine Learning
+* Time Series Forecasting
+* Customer Analytics
+* MLOps
+* Cloud Deployment
+* Dashboard Development
+* Production-Ready AI Systems
+
+This project demonstrates the ability to build a complete industry-grade Data Science solution from data collection to deployment while following modern machine learning engineering and MLOps best practices.
 
 
 ## Author: ATULYA RAJ SINGH
