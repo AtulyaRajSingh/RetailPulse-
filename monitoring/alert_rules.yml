@@ -1,0 +1,17 @@
+groups:
+  - name: retailpulse-alerts
+    rules:
+      - alert: HighDriftScore
+        expr: retailpulse_drift_score > 0.3
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: RetailPulse data drift score is elevated
+      - alert: ChurnRiskSpike
+        expr: retailpulse_churn_high_risk_customers > 50
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: High-risk churn customer count exceeded threshold

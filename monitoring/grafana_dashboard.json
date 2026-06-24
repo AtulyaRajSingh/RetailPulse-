@@ -1,0 +1,24 @@
+{
+  "title": "RetailPulse Operations",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "API Requests",
+      "targets": [{"expr": "sum(rate(retailpulse_requests_total[5m]))"}],
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+    },
+    {
+      "type": "gauge",
+      "title": "Drift Score",
+      "targets": [{"expr": "retailpulse_drift_score"}],
+      "gridPos": {"x": 12, "y": 0, "w": 6, "h": 8}
+    },
+    {
+      "type": "gauge",
+      "title": "High-Risk Churn Customers",
+      "targets": [{"expr": "retailpulse_churn_high_risk_customers"}],
+      "gridPos": {"x": 18, "y": 0, "w": 6, "h": 8}
+    }
+  ]
+}

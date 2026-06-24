@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0" stop-color="#00d2ff"/>
+      <stop offset="1" stop-color="#7cf9ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="50" rx="8" fill="none" />
+  <g transform="translate(6,4)">
+    <rect x="0" y="0" width="42" height="42" rx="8" fill="#071018" />
+    <path d="M8 28 L16 12 L22 22 L30 8 L36 36" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(60,12)">
+    <text x="0" y="22" font-family="Inter, Roboto, sans-serif" font-size="18" font-weight="800" fill="#d4af37">Retail</text>
+    <text x="60" y="22" font-family="Inter, Roboto, sans-serif" font-size="18" font-weight="800" fill="#00d2ff">Pulse</text>
+  </g>
+</svg>
