@@ -180,8 +180,12 @@ python scripts/train_smoke.py
 ```
 
 ## Screenshots
+<img width="1470" height="956" alt="Screenshot 2026-06-24 at 10 26 21 AM" src="https://github.com/user-attachments/assets/57544d62-efac-47cf-92c7-6d6736696bce" /> 
+<img width="1470" height="956" alt="Screenshot 2026-06-24 at 10 27 12 AM" src="https://github.com/user-attachments/assets/950f3a9f-bb2b-49ac-a136-7664e3460b97" />
+<img width="1470" height="956" alt="Screenshot 2026-06-24 at 10 26 45 AM" src="https://github.com/user-attachments/assets/bfd81bd5-a20e-4f79-ad41-85b5debd0e6e" />
+<img width="1470" height="956" alt="Screenshot 2026-06-24 at 10 26 35 AM" src="https://github.com/user-attachments/assets/c21bea41-a5cb-4486-8fd6-d2d3d10e2a9e" />
 
-Run `streamlit run app.py` and capture screenshots into `screenshots/` for project documentation or portfolio publishing.
+
 
 ## Future Improvements
 
